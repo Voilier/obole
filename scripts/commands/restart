@@ -1,0 +1,4 @@
+#!/bin/bash
+
+${PROJECT_DIR}/scripts/commands-${ENV}/stop
+${PROJECT_DIR}/scripts/commands-${ENV}/start

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+source "${VENV_DIR}/bin/activate"
+cd ${PROJECT_DIR}
+git pull
+${PROJECT_DIR}/scripts/commands/install_project_dependencies
+${PROJECT_DIR}/scripts/commands/subrepo pull
+${PROJECT_DIR}/scripts/commands/install_project_assets
+${PROJECT_DIR}/scripts/commands/migrate
+${PROJECT_DIR}/scripts/commands/collectstatic
+${PROJECT_DIR}/scripts/commands/patch_site_packages
+${PROJECT_DIR}/scripts/commands/update_locales
+${PROJECT_DIR}/scripts/commands/update_crontab
+

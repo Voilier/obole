@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "Available commands:"
+for c in "${PROJECT_DIR}/scripts/commands/"*; do
+  echo "  $(basename "$c")"
+done

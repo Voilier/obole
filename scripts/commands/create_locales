@@ -1,0 +1,3 @@
+#!/bin/bash
+
+${PROJECT_DIR}/manage.py makemessages -l en-us -l fr -l nl -l de -l pt

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+sudo -v
+sudo chmod 666 /dev/null
+sudo chmod o+r /dev/urandom
+sudo apt-get update
+sudo apt-get -y upgrade
+sudo apt-get install -y git man file software-properties-common
+sudo locale-gen en_US en_US.UTF-8 fr_FR.UTF-8
+sudo dpkg-reconfigure locales

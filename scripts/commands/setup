@@ -1,0 +1,60 @@
+#!/bin/bash
+
+SECRET_KEY=false
+FIXTURES=true
+LOCALES=false
+CRONTAB=false
+COLLECT=false
+SERVER_FILES=false
+
+case $ENV in
+  dev) ;;
+  gitlabci) ;;
+  ci)
+    SECRET_KEY=true
+    LOCALES=true
+    CRONTAB=true
+    COLLECT=true
+    SERVER_FILES=true
+  ;;
+  prod)
+    SECRET_KEY=true
+    FIXTURES=false
+    LOCALES=true
+    CRONTAB=true
+    COLLECT=true
+  ;;
+esac
+
+${PROJECT_DIR}/scripts/commands/create_project_structure
+
+${PROJECT_DIR}/scripts/commands/subrepo_clone
+${PROJECT_DIR}/scripts/commands/create_virtualenv
+source "${VENV_DIR}/bin/activate"
+${PROJECT_DIR}/scripts/commands/install_project_dependencies
+${PROJECT_DIR}/scripts/commands/patch_site_packages
+
+$SECRET_KEY && ${PROJECT_DIR}/scripts/commands/create_secret_key
+
+${PROJECT_DIR}/scripts/commands/create_keyczar_keys
+${PROJECT_DIR}/scripts/commands/create_db_passwords
+
+${PROJECT_DIR}/scripts/commands/create_db
+${PROJECT_DIR}/scripts/commands/migrate
+
+if $FIXTURES; then
+  ${PROJECT_DIR}/scripts/commands/load_fixtures
+  ${PROJECT_DIR}/scripts/commands/load_warehouse
+fi
+
+${PROJECT_DIR}/scripts/commands/install_project_assets
+
+$COLLECT && ${PROJECT_DIR}/scripts/commands/collectstatic
+
+if $LOCALES; then
+  ${PROJECT_DIR}/scripts/commands/update_locales
+fi
+
+$CRONTAB && ${PROJECT_DIR}/scripts/commands/update_crontab
+
+$SERVER_FILES && ${PROJECT_DIR}/scripts/commands/install_server_files

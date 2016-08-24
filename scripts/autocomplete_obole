@@ -1,0 +1,7 @@
+export COLUMNS
+PROJECT_DIR=$(./scripts/obole get_project_dir)
+for call in obole ./obole ./scripts/obole "${PROJECT_DIR}/scripts/obole"; do
+  complete -W "$(ls -1 "scripts/commands")" $call
+done
+unset call
+alias obole="${PROJECT_DIR}/scripts/obole"

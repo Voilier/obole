@@ -1,0 +1,10 @@
+#!/bin/bash
+
+case $ENV in
+  ci|prod)
+    sudo mkdir -p "${ROOT_DIR}"
+    sudo chown $USER:webapps "${ROOT_DIR}"
+    mkdir -p "${ROOT_DIR}"/{pass/{db,site,keyczar},snapshots,logs,media,run,static}
+  ;;
+  dev|gitlabci) mkdir -p "${PROJECT_DIR}"/{pass/{db,site,keyczar}} ;;
+esac

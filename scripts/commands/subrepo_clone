@@ -1,0 +1,9 @@
+#!/bin/bash
+
+git clone git@github.com:Pawamoy/django-meerkat.git "${PROJECT_DIR}/django-meerkat.git"
+git clone git@github.com:Pawamoy/django-suit-dashboard.git "${PROJECT_DIR}/django-suit-dashboard.git"
+git clone git@github.com:Pawamoy/rosetta-suit.git "${PROJECT_DIR}/scripts/data/patches/rosetta-suit.git"
+git clone git@icube-forge.unistra.fr:CSTB/archan.git "${PROJECT_DIR}/archan.git"
+git clone git@icube-forge.unistra.fr:CSTB/django-archan.git "${PROJECT_DIR}/django-archan.git"
+git clone git@icube-forge.unistra.fr:CSTB/django-cs-models.git "${PROJECT_DIR}/django-cs-models.git"
+git clone git@icube-forge.unistra.fr:CSTB/dependenpy.git "${PROJECT_DIR}/dependenpy.git"

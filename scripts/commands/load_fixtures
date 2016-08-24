@@ -1,0 +1,8 @@
+#!/bin/bash
+
+cd "${PROJECT_DIR}/scripts/data/fixtures"
+${PROJECT_DIR}/manage.py loaddata "application_db.json"
+${PROJECT_DIR}/manage.py loaddata --database=genetic_db "genetic_db.json"
+${PROJECT_DIR}/manage.py loaddata --database=medical_db "questionnaires.json"
+${PROJECT_DIR}/manage.py loaddata "statistics.json"
+${PROJECT_DIR}/manage.py loaddata "visualizations.json"

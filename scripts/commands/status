@@ -1,0 +1,13 @@
+#!/bin/bash
+
+PS="$(ps aux | sed 's/[ ]*$//g' | sed '/^$/d')"
+SUP="$(echo "$PS" | grep 'supervisor' | grep -v 'grep')"
+GUN="$(echo "$PS" | grep 'gunicorn' | grep -v 'grep')"
+NGI="$(echo "$PS" | grep 'nginx' | grep -v 'grep')"
+
+echo "================================================="
+test -n "$SUP" && echo -e "Supervisor is running:\n$SUP" || echo "Supervisor is not running"
+echo "================================================="
+test -n "$GUN" && echo -e "Gunicorn is running:\n$GUN" || echo "Gunicorn is not running"
+echo "================================================="
+test -n "$NGI" && echo -e "Nginx is running:\n$NGI" || echo "Nginx is not running"

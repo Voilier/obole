@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd "${PROJECT_DIR}/scripts/data"
+cp -Lvrf patches/site-packages/* "${VENV_DIR}/lib/python2.7/site-packages"
+cp -vrf patches/rosetta-suit.git/rosetta "${VENV_DIR}/lib/python2.7/site-packages"

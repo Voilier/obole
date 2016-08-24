@@ -74,10 +74,19 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
+with open(os.path.join(BASE_DIR, 'pass/db/obole_db_pass')) as f:
+    OBOLE_DB_PASSWORD = f.read().strip()
+
+# Database connection info. If left empty, will default to the dummy backend.
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'obole_db',
+        'USER': 'obole_db_role',
+        'PASSWORD': OBOLE_DB_PASSWORD,
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 

@@ -1,0 +1,29 @@
+#!/bin/bash
+
+pep8_test() {
+    pep8 --ignore=E402,E226,E501 "$@"
+}
+
+pyflakes_test() {
+    pyflakes "$@"
+}
+
+pylint_test() {
+    pylint --load-plugins pylint_django -f colorized "$@"
+}
+
+main() {
+  local FILES=$(find . -name '*.py' | grep -ve migrations -e similarity -e app-fix -e docs -e build -e example -e \.tox)
+  echo -e "\033[1;33m ================== PEP8 TEST ================== \033[0m"
+  pep8_test $FILES
+  echo
+  echo -e "\033[1;33m ================ PYFLAKES TEST ================ \033[0m"
+  pyflakes_test $FILES
+  echo
+  echo -e "\033[1;33m ================= PYLINT TEST ================= \033[0m"
+  pylint_test $FILES
+  echo
+  return 0
+}
+
+main

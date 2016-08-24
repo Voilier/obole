@@ -1,0 +1,6 @@
+#!/bin/bash
+
+${PROJECT_DIR}/manage.py shell --plain -v 0 --no-color <<EOF
+from warehouse.cron import import_data
+t = import_data()
+EOF

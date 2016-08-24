@@ -1,0 +1,5 @@
+#!/bin/bash
+
+${PROJECT_DIR}/manage.py compilemessages
+${PROJECT_DIR}/manage.py makemessages --all
+${PROJECT_DIR}/manage.py compilemessages

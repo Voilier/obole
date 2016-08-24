@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for db in obole_db; do
+  sudo su - postgres -c "dropdb $db"
+  sudo su - postgres -c "dropuser ${db}_role"
+done

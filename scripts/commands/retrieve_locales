@@ -1,0 +1,6 @@
+#!/bin/bash
+
+case $USER in
+  pawantu) scp -r mazzucotelli@genida.unistra.fr:/webapps/genida/sources/locale "${PROJECT_DIR}" ;;
+  *) echo "retrieve_locales: your username $USER is not defined in the script, please add it if needed" >&2 ;;
+esac

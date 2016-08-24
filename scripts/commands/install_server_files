@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd "${PROJECT_DIR}/scripts/data"
+sudo cp -v server-files/gunicorn_start_${ENV} "${VENV_DIR}/bin/gunicorn_start"
+sudo chmod +x "${VENV_DIR}/bin/gunicorn_start"
+sudo cp -v server-files/nginx_site_${ENV} /etc/nginx/sites-available/obole
+sudo ln -s /etc/nginx/sites-available/obole /etc/nginx/sites-enabled/obole
+sudo cp -v server-files/supervisor_obole_conf /etc/supervisor/conf.d/obole.conf
+sudo supervisorctl reload

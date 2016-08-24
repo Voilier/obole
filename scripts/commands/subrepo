@@ -1,0 +1,9 @@
+#!/bin/bash
+
+pad="-----------------------------------------------------"
+cd "${PROJECT_DIR}"
+for repo in *.git scripts/data/patches/rosetta-suit.git; do
+  printf "%s %s\n" "$repo" "${pad:${#repo}}"
+  ( cd "$repo"; git "$@"; )
+  echo
+done

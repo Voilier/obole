@@ -93,3 +93,4 @@ ENV/
 
 # Project specific
 db.sqlite3
+pass

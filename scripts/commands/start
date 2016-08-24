@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo supervisorctl start obole
+sudo service nginx start

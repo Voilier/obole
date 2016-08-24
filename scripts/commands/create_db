@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd "${ROOT_DIR}/pass/db"
+for db in obole_db; do
+  sudo su - postgres -c 'psql -c "CREATE USER '"${db}_role ENCRYPTED PASSWORD '$(cat ${db}_pass)'"'"'
+  sudo su - postgres -c "createdb -O ${db}_role ${db}"
+done

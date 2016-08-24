@@ -1,0 +1,4 @@
+#!/bin/bash
+
+keyczart create --location="${ROOT_DIR}/pass/keyczar" --purpose=crypt
+keyczart addkey --location="${ROOT_DIR}/pass/keyczar" --status=primary --size=256

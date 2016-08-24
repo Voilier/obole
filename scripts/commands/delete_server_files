@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sudo rm /etc/nginx/sites-available/genida
+sudo rm /etc/nginx/sites-enabled/genida
+sudo rm /etc/supervisor/conf.d/genida.conf
