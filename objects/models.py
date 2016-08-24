@@ -1,10 +1,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
-
-User = get_user_model()
 
 
 class Object(models.Model):
@@ -17,14 +15,14 @@ class Object(models.Model):
         (5, _('Custom'))
     )
 
-    owner = models.ForeignKey(User)
-    disposer = models.ForeignKey(User)
+    owner = models.ForeignKey(User, related_name='owning')
+    disposer = models.ForeignKey(User, related_name='disposing')
     visibility = models.PositiveSmallIntegerField(choices=VISIBILITY)
 
 
 class ObjectPermissions(models.Model):
     PERMISSIONS = (
-        (0, _('Can be lent before being returned.'))
+        (0, _('Can be lent before being returned.')),
     )
 
     user = models.ForeignKey(User)
@@ -33,6 +31,6 @@ class ObjectPermissions(models.Model):
 
 
 class ObjectCustomVisibility(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='custom_allow')
     obj = models.ForeignKey(Object)
-    friend = models.ForeignKey(User)
+    friend = models.ForeignKey(User, related_name='custom_allowed')
