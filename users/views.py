@@ -1,4 +1,4 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 
 
 def user_objects(request, user):
@@ -9,7 +9,7 @@ def user_objects(request, user):
     return None
 
 
-def user_object(request, user, object):
+def user_object(request, user, obj):
     if request.method == 'GET':
         pass
     elif request.method == 'DELETE':

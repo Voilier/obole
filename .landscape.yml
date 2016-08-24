@@ -1,0 +1,17 @@
+doc-warnings: true
+test-warnings: false
+strictness: veryhigh
+max-line-length: 79
+uses:
+  - django
+autodetect: true
+requirements:
+  - requirements.txt
+ignore-paths:
+  - docs
+ignore-patterns:
+  - ^example/doc_.*\.py$
+  - (^|/)docs(/|$)
+python-targets:
+  - 2
+  - 3

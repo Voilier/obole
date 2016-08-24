@@ -1,4 +1,8 @@
 # obole
+
+[![Build Status](https://travis-ci.org/Voilier/obole.svg?branch=master)](https://travis-ci.org/Voilier/obole)
+[![Code Health](https://landscape.io/github/Voilier/obole/master/landscape.svg?style=flat)](https://landscape.io/github/Voilier/obole/master)
+
 Give your stuff, don't sell it: we take care of Charon's obol.
 
 # API
