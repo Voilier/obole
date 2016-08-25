@@ -1,4 +1,8 @@
+# -*- coding: utf-8 -*-
+
 from __future__ import unicode_literals
+from __future__ import absolute_import
+
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -6,28 +10,43 @@ from django.utils.translation import ugettext as _
 
 
 class Object(models.Model):
-    VISIBILITY = (
-        (0, _('Just me')),
-        (1, _('Partner')),
-        (2, _('Friends')),
-        (3, _('Friends & their friends')),
-        (4, _('Public')),
-        (5, _('Custom'))
-    )
+    class Visibility(object):
+        JUST_ME = 0
+        PARTNER = 1
+        FRIENDS = 2
+        FRIENDS_AND_FRIENDS = 3
+        PUBLIC = 4
+        CUSTOM = 5
+
+        CHOICES = (
+            (JUST_ME, _('Just me')),
+            (PARTNER, _('Partner')),
+            (FRIENDS, _('Friends')),
+            (FRIENDS_AND_FRIENDS, _('Friends & their friends')),
+            (PUBLIC, _('Public')),
+            (CUSTOM, _('Custom'))
+        )
 
     owner = models.ForeignKey(User, related_name='owning')
     disposer = models.ForeignKey(User, related_name='disposing')
-    visibility = models.PositiveSmallIntegerField(choices=VISIBILITY)
+    visibility = models.PositiveSmallIntegerField(choices=Visibility.CHOICES)
+
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    picture = models.ImageField()
 
 
 class ObjectPermissions(models.Model):
-    PERMISSIONS = (
-        (0, _('Can be lent before being returned.')),
-    )
+    class Permission(object):
+        LEND_WO_RETURN = 0
+
+        CHOICES = (
+            (LEND_WO_RETURN, _('Can be lent before being returned.')),
+        )
 
     user = models.ForeignKey(User)
     object = models.ForeignKey(Object)
-    permission = models.PositiveSmallIntegerField(choices=PERMISSIONS)
+    permission = models.PositiveSmallIntegerField(choices=Permission.CHOICES)
 
 
 class ObjectCustomVisibility(models.Model):
