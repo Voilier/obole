@@ -2,9 +2,10 @@
 
 from __future__ import absolute_import, unicode_literals
 
-from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext as _
+
+from users.models import User
 
 
 class Object(models.Model):
@@ -31,7 +32,7 @@ class Object(models.Model):
 
     name = models.CharField(max_length=255)
     description = models.TextField()
-    picture = models.ImageField()
+    picture = models.ImageField(blank=True, null=True)
 
 
 class ObjectPermissions(models.Model):

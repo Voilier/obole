@@ -12,7 +12,10 @@ before_script:
 - ./scripts/obole create_db_passwords
 - ./scripts/obole create_db
 script:
-- python manage.py test --noinput --failfast users objects groups transactions
+- coverage run --source='.' manage.py test --noinput --failfast users objects groups transactions
+- coverage report
 notifications:
   email: false
   slack: voilier:ltkboXjosDG1PMIIHKGcpQl2
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
