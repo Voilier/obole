@@ -1,0 +1,4 @@
+#!/bin/bash
+
+coverage run --source='.' "${PROJECT_DIR}/manage.py" test --noinput --failfast users objects groups transactions
+coverage report

@@ -6,14 +6,13 @@ services:
 install:
 - pip install -r requirements.txt
 before_script:
-- "echo Hostname: $HOSTNAME"
 - . scripts/autocomplete_obole
 - ./scripts/obole create_project_structure
 - ./scripts/obole create_db_passwords
 - ./scripts/obole create_db
+- ./scripts/obole migrate
 script:
-- coverage run --source='.' manage.py test --noinput --failfast users objects groups transactions
-- coverage report
+- ./scripts/obole test
 notifications:
   email: false
   slack: voilier:ltkboXjosDG1PMIIHKGcpQl2
