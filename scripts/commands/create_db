@@ -1,7 +1,17 @@
 #!/bin/bash
 
 cd "${ROOT_DIR}/pass/db"
-for db in obole_db; do
-  sudo su - postgres -c 'psql -c "CREATE USER '"${db}_role ENCRYPTED PASSWORD '$(cat ${db}_pass)'"'"'
-  sudo su - postgres -c "createdb -O ${db}_role ${db}"
-done
+case $ENV in
+  travisci|gitlabci)
+    for db in obole_db; do
+      psql -U postgres -c "CREATE USER ${db}_role ENCRYPTED PASSWORD '$(cat ${db}_pass)';"
+      psql -U postgres -c "CREATE DATABASE ${db} OWNER ${db}_role;"
+    done
+  ;;
+  *)
+    for db in obole_db; do
+      sudo su - postgres -c 'psql -c "CREATE USER '"${db}_role ENCRYPTED PASSWORD '$(cat ${db}_pass)'"';"'
+      sudo su - postgres -c "createdb -O ${db}_role ${db};"
+    done
+  ;;
+esac

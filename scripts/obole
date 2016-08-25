@@ -24,6 +24,14 @@ set_for_gitlab_ci() {
   ENV_COLOR='\033[1;35m'
 }
 
+set_for_travis_ci() {
+  ENV=travisci
+  ROOT_DIR="$(cd "$(dirname "$0")"/..; pwd)"
+  PROJECT_DIR="${ROOT_DIR}"
+  VENV_DIR="${PROJECT_DIR}/virtualenv"
+  ENV_COLOR='\033[1;35m'
+}
+
 set_for_development() {
   ENV=dev
   ROOT_DIR="$(cd "$(dirname "$0")"/..; pwd)"
@@ -51,7 +59,7 @@ print_configuration() {
 
 main() {
   case "$HOSTNAME" in
-    'obole-ci') set_for_ci ;;
+    'testing-worker-linux-docker'*) set_for_travis_ci ;;
     'obole') set_for_production ;;
     *) set_for_development ;;
   esac
