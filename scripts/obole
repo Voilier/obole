@@ -51,7 +51,6 @@ print_configuration() {
 
 main() {
   case "$HOSTNAME" in
-    'ldlc-igbmc') set_for_development ;;
     'obole-ci') set_for_ci ;;
     'obole') set_for_production ;;
     *) set_for_development ;;

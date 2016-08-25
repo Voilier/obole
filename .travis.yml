@@ -4,10 +4,11 @@ python:
 install:
 - pip install -r requirements.txt
 before_script:
+- "echo Hostname: $HOSTNAME"
 - . scripts/autocomplete_obole
-- obole create_project_structure
-- obole create_db_passwords
-- obole create_db
+- ./scripts/obole create_project_structure
+- ./scripts/obole create_db_passwords
+- ./scripts/obole create_db
 script:
 - python manage.py test --noinput --failfast users objects groups transactions
 notifications:
