@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """obole URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -14,7 +16,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 
+from __future__ import absolute_import, unicode_literals
+
 from django.conf.urls import include, url
+from django.conf import settings
+from django.contrib import admin
 from django.contrib.auth.models import User
 
 from rest_framework import routers, serializers, viewsets
@@ -25,6 +31,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = ('url', 'username', 'email', 'is_staff')
+
 
 # ViewSets define the view behavior.
 class UserViewSet(viewsets.ModelViewSet):
@@ -39,5 +46,14 @@ router.register(r'users', UserViewSet)
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     url(r'^', include(router.urls)),
+    url(r'^admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
+
+if settings.DEBUG:
+    from django.conf.urls.static import static
+    urlpatterns += static(
+        settings.STATIC_URL, document_root=settings.STATIC_ROOT
+    ) + static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+    )

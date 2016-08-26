@@ -34,21 +34,36 @@ class Object(models.Model):
     description = models.TextField()
     picture = models.ImageField(blank=True, null=True)
 
+    def __str__(self):
+        return self.name
+
+    def __eq__(self, other):
+        return all((self.name == other.name,
+                    self.owner == other.owner,
+                    self.disposer == other.disposer))
+
 
 class ObjectPermissions(models.Model):
     class Permission(object):
         LEND_WO_RETURN = 0
 
         CHOICES = (
-            (LEND_WO_RETURN, _('Can be lent before being returned.')),
+            (LEND_WO_RETURN, _('Can be lent before being returned')),
         )
 
     user = models.ForeignKey(User)
     object = models.ForeignKey(Object)
     permission = models.PositiveSmallIntegerField(choices=Permission.CHOICES)
 
+    def __str__(self):
+        return '%s, %s, %s' % (self.user, self.object,
+                               self.get_permission_display())
+
 
 class ObjectCustomVisibility(models.Model):
     user = models.ForeignKey(User, related_name='custom_allow')
-    obj = models.ForeignKey(Object)
+    object = models.ForeignKey(Object)
     friend = models.ForeignKey(User, related_name='custom_allowed')
+
+    def __str__(self):
+        return '%s, %s, %s' % (self.user, self.object, self.friend)

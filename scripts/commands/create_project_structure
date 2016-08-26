@@ -6,5 +6,5 @@ case $ENV in
     sudo chown $USER:webapps "${ROOT_DIR}"
     mkdir -p "${ROOT_DIR}"/{pass/{db,site,keyczar},snapshots,logs,media,run,static}
   ;;
-  dev|gitlabci|travisci) mkdir -p "${PROJECT_DIR}"/pass/{db,site,keyczar} ;;
+  dev|gitlabci|travisci) mkdir -p "${PROJECT_DIR}"/{pass/{db,site,keyczar},media,static} ;;
 esac

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+
+user="${1:-admin}"
+passw="${2:-admin}"
+"${PROJECT_DIR}/manage.py" shell --plain -v 0 --no-color <<EOF
+from users.models import User
+User.objects.create_superuser("${user}", '', "${passw}")
+EOF
+
