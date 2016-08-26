@@ -6,6 +6,7 @@ LOCALES=false
 CRONTAB=false
 COLLECT=false
 SERVER_FILES=false
+ADMIN=true
 
 case $ENV in
   dev) ;;
@@ -16,6 +17,7 @@ case $ENV in
     CRONTAB=true
     COLLECT=true
     SERVER_FILES=true
+    ADMIN=false
   ;;
   prod)
     SECRET_KEY=true
@@ -23,31 +25,32 @@ case $ENV in
     LOCALES=true
     CRONTAB=true
     COLLECT=true
+    ADMIN=false
   ;;
 esac
 
 ${PROJECT_DIR}/scripts/commands/create_project_structure
 
-${PROJECT_DIR}/scripts/commands/subrepo_clone
+#${PROJECT_DIR}/scripts/commands/subrepo_clone
 ${PROJECT_DIR}/scripts/commands/create_virtualenv
 source "${VENV_DIR}/bin/activate"
 ${PROJECT_DIR}/scripts/commands/install_project_dependencies
-${PROJECT_DIR}/scripts/commands/patch_site_packages
+#${PROJECT_DIR}/scripts/commands/patch_site_packages
 
 $SECRET_KEY && ${PROJECT_DIR}/scripts/commands/create_secret_key
 
-${PROJECT_DIR}/scripts/commands/create_keyczar_keys
+#${PROJECT_DIR}/scripts/commands/create_keyczar_keys
 ${PROJECT_DIR}/scripts/commands/create_db_passwords
 
 ${PROJECT_DIR}/scripts/commands/create_db
 ${PROJECT_DIR}/scripts/commands/migrate
 
-if $FIXTURES; then
-  ${PROJECT_DIR}/scripts/commands/load_fixtures
-  ${PROJECT_DIR}/scripts/commands/load_warehouse
-fi
+#if $FIXTURES; then
+#  ${PROJECT_DIR}/scripts/commands/load_fixtures
+#  ${PROJECT_DIR}/scripts/commands/load_warehouse
+#fi
 
-${PROJECT_DIR}/scripts/commands/install_project_assets
+#${PROJECT_DIR}/scripts/commands/install_project_assets
 
 $COLLECT && ${PROJECT_DIR}/scripts/commands/collectstatic
 
@@ -55,6 +58,16 @@ if $LOCALES; then
   ${PROJECT_DIR}/scripts/commands/update_locales
 fi
 
-$CRONTAB && ${PROJECT_DIR}/scripts/commands/update_crontab
+#$CRONTAB && ${PROJECT_DIR}/scripts/commands/update_crontab
 
-$SERVER_FILES && ${PROJECT_DIR}/scripts/commands/install_server_files
+#$SERVER_FILES && ${PROJECT_DIR}/scripts/commands/install_server_files
+
+if $ADMIN; then
+  ${PROJECT_DIR}/scripts/commands/create_super_user
+  echo "Admin user created, login=admin, password=admin"
+fi
+
+echo
+echo "To work on obole, activate your virtualenv, then:"
+echo ". scripts/autocomplete_obole"
+echo "obole help # or ./manage.py help"

@@ -6,6 +6,14 @@
 
 Give your stuff, don't sell it: we take care of Charon's obol.
 
+## Setup
+
+```bash
+git clone git@github.com:Voilier/obole
+cd obole
+./scripts/obole setup
+```
+
 ## API
 
 Models are:
