@@ -8,3 +8,4 @@ from django.contrib.auth.models import User as BaseUser
 
 class User(BaseUser):
     nickname = models.CharField(max_length=255)
+    profile_picture = models.ImageField(blank=True, null=True)
