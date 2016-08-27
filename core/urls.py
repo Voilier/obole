@@ -47,7 +47,7 @@ router = routers.DefaultRouter()
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^admin/', admin.site.urls),
-    url(r'^users/', include('users.urls')),
+    url(r'^', include('users.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 
