@@ -3,9 +3,9 @@
 from __future__ import absolute_import, unicode_literals
 
 from django.db import models
+from django.db.models import Q
 from django.utils.translation import ugettext as _
-
-from users.models import User
+from django.contrib.auth.models import User
 
 
 class Object(models.Model):
@@ -13,15 +13,13 @@ class Object(models.Model):
         JUST_ME = 0
         PARTNER = 1
         FRIENDS = 2
-        FRIENDS_AND_FRIENDS = 3
-        PUBLIC = 4
-        CUSTOM = 5
+        PUBLIC = 3
+        CUSTOM = 4
 
         CHOICES = (
             (JUST_ME, _('Just me')),
             (PARTNER, _('Partner')),
             (FRIENDS, _('Friends')),
-            (FRIENDS_AND_FRIENDS, _('Friends & their friends')),
             (PUBLIC, _('Public')),
             (CUSTOM, _('Custom'))
         )
@@ -41,6 +39,19 @@ class Object(models.Model):
         return all((self.name == other.name,
                     self.owner == other.owner,
                     self.disposer == other.disposer))
+
+    @classmethod
+    def public(cls, queryset=None):
+        if queryset is None:
+            queryset = cls.objects.all()
+        return queryset.filter(visibility=cls.Visibility.PUBLIC)
+
+    @classmethod
+    def user(cls, user, queryset=None):
+        if queryset is None:
+            queryset = cls.objects.all()
+        return Object.public(
+            queryset.filter(Q(owner=user.pk) | Q(disposer=user.pk)))
 
 
 class ObjectPermissions(models.Model):

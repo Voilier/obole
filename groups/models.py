@@ -8,4 +8,4 @@ from django.db import models
 
 
 class Group(BaseGroup):
-    description = models.TextField(_('Description'))
+    description = models.TextField(_('Description'), blank=True)
