@@ -11,14 +11,12 @@ from django.contrib.auth.models import User
 class Object(models.Model):
     class Visibility(object):
         JUST_ME = 0
-        PARTNER = 1
-        FRIENDS = 2
-        PUBLIC = 3
-        CUSTOM = 4
+        FRIENDS = 1
+        PUBLIC = 2
+        CUSTOM = 3
 
         CHOICES = (
             (JUST_ME, _('Just me')),
-            (PARTNER, _('Partner')),
             (FRIENDS, _('Friends')),
             (PUBLIC, _('Public')),
             (CUSTOM, _('Custom'))

@@ -50,9 +50,7 @@ class Transaction(models.Model):
 
     def visibility(self):
         for v in (Object.Visibility.JUST_ME,
-                  Object.Visibility.PARTNER,
                   Object.Visibility.FRIENDS,
-                  Object.Visibility.FRIENDS_AND_FRIENDS,
                   Object.Visibility.PUBLIC):
             if v in (self.visibility1, self.visibility2):
                 return v

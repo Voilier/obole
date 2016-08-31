@@ -38,10 +38,10 @@ class TransactionTestCase(TestCase):
             user2=user2,
             object1=object1,
             object2=object2,
-            visibility1=Object.Visibility.PARTNER,
+            visibility1=Object.Visibility.JUST_ME,
             visibility2=Object.Visibility.FRIENDS,
         )
 
     def test_transaction_visibility(self):
         transaction = Transaction.objects.all()[0]
-        self.assertEqual(transaction.visibility(), Object.Visibility.PARTNER)
+        self.assertEqual(transaction.visibility(), Object.Visibility.JUST_ME)
