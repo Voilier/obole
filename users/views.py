@@ -3,54 +3,43 @@
 from __future__ import absolute_import, unicode_literals
 
 import json
+from itertools import chain
+
+from django.db.models import Q
 from django.http import HttpResponse
-from django.contrib.auth.models import User
+from rest_framework import generics
 
 from core.http import JSONResponse
 
 from objects.models import Object
+from objects.serializers import ObjectSerializer
 
-from .serializers import user_serializer
+from .models import User, UserProfile
+from .serializers import UserSerializer
 from .permissions import ObjectPermission
 
 
-def user_list(request):
-    if request.method == 'GET':
-        queryset = User.objects.all()
-        data = user_serializer(queryset)
-        return JSONResponse(data)
-    else:
-        return HttpResponse(status_code=400)
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 
-def user_detail(request, user):
-
-    info_mock = {
-        'name': 'Toto',
-        'bio': 'I\'m the coolest guy on earth',
-        'total_sharing': 50,
-        'current_sharing': 2,
-        'current_borrow': 4
-    }
-    if request.method == 'GET':
-        return HttpResponse(json.dumps(info_mock), content_type="application/json")
-        pass
-    elif request.method == 'POST':
-        return HttpResponse(json.dumps(info_mock), content_type="application/json")
-    return None
+class UserDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    lookup_field = 'username'
 
 
-def user_objects(request, user):
-    if request.method == 'GET':
-        pass
-    elif request.method == 'POST':
-        pass
-    return None
+class UserObjectsList(generics.ListCreateAPIView):
+    serializer_class = ObjectSerializer
+
+    def get_queryset(self):
+        return Object.user(self.request.user)
 
 
-def user_object(request, user, obj):
-    if request.method == 'GET':
-        pass
-    elif request.method == 'DELETE':
-        pass
-    return None
+class UserObjectsDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ObjectSerializer
+
+    def get_queryset(self):
+        return Object.user(self.request.user)
+

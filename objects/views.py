@@ -2,16 +2,12 @@
 
 from __future__ import absolute_import, unicode_literals
 
-import json
-
-from django.http import HttpResponse
-
-from core.http import JSONResponse
+from rest_framework import generics
 
 from .models import Object
-from .serializers import object_serializer
+from .serializers import ObjectSerializer
 
 
-def public_objects(request):
+class PublicObjects(generics.ListAPIView):
     queryset = Object.public()
-    return JSONResponse(queryset)
+    serializer_class = ObjectSerializer

@@ -2,13 +2,13 @@
 
 from __future__ import absolute_import, unicode_literals
 
-from django.conf.urls import include, url
+from django.conf.urls import url
 
-from .views import user_list, user_detail
+from .views import UserList, UserDetail, UserObjectsList, UserObjectsDetail
 
 urlpatterns = [
-    url(r'^$', user_list),
-    url(r'^(?P<pk>\d+)/$', user_detail, name='user_detail'),
-    # url(r'^(?P<pk>\d+)/objects/$', UserObjectsList.as_view()),
-    # url(r'^(?P<pk>\d+)/objects/(?P<obj>\d+)/$', UserObjectDetail.as_view()),
+    url(r'^$', UserList.as_view()),
+    url(r'^(?P<username>\w+)/$', UserDetail.as_view()),
+    url(r'^(?P<username>\w+)/objects/$', UserObjectsList.as_view()),
+    url(r'^(?P<username>\w+)/objects/(?P<pk>\d+)/$', UserObjectsDetail.as_view())
 ]

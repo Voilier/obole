@@ -2,26 +2,17 @@
 
 from __future__ import absolute_import, unicode_literals
 
-from django.db.models import QuerySet
+from rest_framework import serializers
+
+from .models import Object
 
 
-def object_serializer(obj):
-    if isinstance(obj, QuerySet):
-        return [{
-            'owner': o.owner,
-            'disposer': o.disposer,
-            'visibility': o.visibility,
-            'name': o.name,
-            'description': o.description,
-            'picture': o.picture
-        } for o in obj]
-    else:
-        return {
-            'owner': obj.owner,
-            'disposer': obj.disposer,
-            'visibility': obj.visibility,
-            'name': obj.name,
-            'description': obj.description,
-            'picture': obj.picture
-        }
+class ObjectSerializer(serializers.ModelSerializer):
+    owner = serializers.CharField(source='owner.username')
+    disposer = serializers.CharField(source='disposer.username')
+
+    class Meta:
+        model = Object
+        fields = ('id', 'owner', 'disposer', 'visibility',
+                  'name', 'description', 'picture')
 
